@@ -19,5 +19,9 @@ use Illuminate\Http\Request;
 
 Route::namespace('\App\Http\Controllers\Api')->group(function(){
     Route::post('login', 'AuthorizationsController@login');
+    Route::get('configs','ConfigController@configs');
+    Route::middleware('api.refresh.token')->group(function(){
+        Route::post('configs','ConfigController@store');
+    });
 });
 
