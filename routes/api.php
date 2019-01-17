@@ -19,7 +19,8 @@ use Illuminate\Http\Request;
 
 Route::namespace('\App\Http\Controllers\Api')->group(function(){
     Route::post('login', 'AuthorizationsController@login');
-    Route::get('configs','ConfigController@configs');
+    Route::get('invariable_configs','ConfigController@invariableConfigs');
+    Route::get('variable_configs','ConfigController@variableConfigs');
     Route::middleware('api.refresh.token')->group(function(){
         Route::post('configs','ConfigController@store');
         Route::post('channel_records','DataController@channel_records_store');

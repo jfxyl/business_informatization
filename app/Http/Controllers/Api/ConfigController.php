@@ -14,9 +14,21 @@ use App\Models\Partner;
 
 class ConfigController extends Controller
 {
-    public function configs()
+    public function invariableConfigs()
     {
         return config('params');
+    }
+
+    public function variableConfigs()
+    {
+        $params = [];
+        $params['record_channel_user'] = RecordChannelUser::where('status',1)->get()->pluck('name');
+        $params['record_legal_person'] = RecordLegalPerson::where('status',1)->get()->pluck('name');
+        $params['bond_submit_person'] = BondSubmitPerson::where('status',1)->get()->pluck('name');
+        $params['project_manager'] = ProjectManager::where('status',1)->get()->pluck('name');
+        $params['business_channel'] = BusinessChannel::where('status',1)->get()->pluck('name');
+        $params['partner'] = Partner::where('status',1)->get()->pluck('name');
+        return $params;
     }
 
     public function store(ConfigRequest $request)
