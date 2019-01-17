@@ -26,7 +26,7 @@ class EnterDepotRequest extends FormRequest
     public function rules()
     {
         $this->params = config('params');
-        return [
+        $rules =  [
             'company_name' => ['bail','required'],
             //'record_user' => ['bail','required'],
             'record_at' => ['bail','required','date_format:Y-m-d'],
@@ -42,6 +42,15 @@ class EnterDepotRequest extends FormRequest
             'is_annual_review' => ['bail','required',Rule::in($this->params['is_annual_review'])],
             'remark' => ''
         ];
+        switch($this->method()) {
+            case 'POST':
+                return $rules;
+                break;
+            case 'PATCH':
+                $rules['id'] = ['bail','required','exists:channel_records'];
+                return $rules;
+                break;
+        }
     }
 
     public function attributes()

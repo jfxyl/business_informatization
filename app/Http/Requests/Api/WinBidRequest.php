@@ -26,7 +26,7 @@ class WinBidRequest extends FormRequest
     public function rules()
     {
         $this->params = config('params');
-        return [
+        $rules =  [
             'area' => ['bail','required'],
             'project_name' => ['bail','required'],
             'win_bid_unit' => ['bail','required',Rule::in($this->params['win_bid_unit'])],
@@ -45,6 +45,15 @@ class WinBidRequest extends FormRequest
             'is_up_to_par' => ['bail','required',Rule::in($this->params['is_up_to_par'])],
             'remark' => ''
         ];
+        switch($this->method()) {
+            case 'POST':
+                return $rules;
+                break;
+            case 'PATCH':
+                $rules['id'] = ['bail','required','exists:channel_records'];
+                return $rules;
+                break;
+        }
     }
 
     public function attributes()

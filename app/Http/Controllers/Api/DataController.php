@@ -15,8 +15,8 @@ class DataController extends Controller
 {
     public function channelRecordsStore(ChannelRecordRequest $request)
     {
-        if(ChannelRecord::create($request->all())){
-            return formSuccess('添加成功！');
+        if($data = ChannelRecord::create($request->all())){
+            return formSuccess('添加成功！',$data);
         }else{
             return formError('添加失败！');
         }
@@ -24,8 +24,8 @@ class DataController extends Controller
 
     public function enterDepotsStore(EnterDepotRequest $request)
     {
-        if(EnterDepot::create($request->all())){
-            return formSuccess('添加成功！');
+        if($data = EnterDepot::create($request->all())){
+            return formSuccess('添加成功！',$data);
         }else{
             return formError('添加失败！');
         }
@@ -33,10 +33,37 @@ class DataController extends Controller
 
     public function winBidsStore(WinBidRequest $request)
     {
-        if(WinBid::create($request->all())){
-            return formSuccess('添加成功！');
+        if($data = WinBid::create($request->all())){
+            return formSuccess('添加成功！',$data);
         }else{
             return formError('添加失败！');
+        }
+    }
+
+    public function channelRecordsUpdate(ChannelRecordRequest $request)
+    {
+        if($data = ChannelRecord::where('id',$request->id)->update($request->except('id'))){
+            return formSuccess('修改成功！');
+        }else{
+            return formError('修改失败！');
+        }
+    }
+
+    public function enterDepotsUpdate(EnterDepotRequest $request)
+    {
+        if($data = EnterDepot::where('id',$request->id)->update($request->except('id'))){
+            return formSuccess('修改成功！');
+        }else{
+            return formError('修改失败！');
+        }
+    }
+
+    public function winBidsUpdate(WinBidRequest $request)
+    {
+        if($data = WinBid::where('id',$request->id)->update($request->except('id'))){
+            return formSuccess('修改成功！');
+        }else{
+            return formError('修改失败！');
         }
     }
 

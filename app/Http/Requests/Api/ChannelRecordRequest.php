@@ -27,7 +27,7 @@ class ChannelRecordRequest extends FormRequest
     public function rules()
     {
         $this->params = config('params');
-        return [
+        $rules = [
             'record_area' => 'bail|required',
             //'record_user' => 'bail|required',
             'record_at' => 'bail|required|date_format:Y-m-d',
@@ -43,11 +43,21 @@ class ChannelRecordRequest extends FormRequest
             'is_set_filiale' => ['bail','required',Rule::in($this->params['is_set_filiale'])],
             'remark' => ''
         ];
+        switch($this->method()) {
+            case 'POST':
+                return $rules;
+                break;
+            case 'PATCH':
+                $rules['id'] = ['bail','required','exists:channel_records'];
+                return $rules;
+                break;
+        }
     }
 
     public function attributes()
     {
         return [
+            'id' => '记录',
             'record_area' => '备案区域',
             //'record_user' => '备案人',
             'record_at' => '备案时间',
