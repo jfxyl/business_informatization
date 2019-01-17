@@ -13,7 +13,7 @@ use App\Models\WinBid;
 
 class DataController extends Controller
 {
-    public function channel_records_store(ChannelRecordRequest $request)
+    public function channelRecordsStore(ChannelRecordRequest $request)
     {
         if(ChannelRecord::create($request->all())){
             return formSuccess('添加成功！');
@@ -22,7 +22,7 @@ class DataController extends Controller
         }
     }
 
-    public function enter_depots_store(EnterDepotRequest $request)
+    public function enterDepotsStore(EnterDepotRequest $request)
     {
         if(EnterDepot::create($request->all())){
             return formSuccess('添加成功！');
@@ -31,12 +31,27 @@ class DataController extends Controller
         }
     }
 
-    public function win_bids_store(WinBidRequest $request)
+    public function winBidsStore(WinBidRequest $request)
     {
         if(WinBid::create($request->all())){
             return formSuccess('添加成功！');
         }else{
             return formError('添加失败！');
         }
+    }
+
+    public function channelRecords()
+    {
+        return ChannelRecord::paginate(10);
+    }
+
+    public function enterDepots()
+    {
+        return EnterDepot::paginate(10);
+    }
+
+    public function winBids()
+    {
+        return WinBid::paginate(10);
     }
 }

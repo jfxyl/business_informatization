@@ -31,7 +31,7 @@ class ConfigController extends Controller
         return $params;
     }
 
-    public function store(ConfigRequest $request)
+    public function variableConfigsStore(ConfigRequest $request)
     {
 //        dump(RecordChannelUser,RecordLegalPerson,BondSubmitPerson,ProjectManager,BusinessChannel,Partner);
         switch($request->type){

@@ -22,10 +22,13 @@ Route::namespace('\App\Http\Controllers\Api')->group(function(){
     Route::get('invariable_configs','ConfigController@invariableConfigs');
     Route::get('variable_configs','ConfigController@variableConfigs');
     Route::middleware('api.refresh.token')->group(function(){
-        Route::post('configs','ConfigController@store');
-        Route::post('channel_records','DataController@channel_records_store');
-        Route::post('enter_depots','DataController@enter_depots_store');
-        Route::post('win_bids','DataController@win_bids_store');
+        Route::post('variable_configs','ConfigController@variableConfigsStore');
+        Route::get('channel_records','DataController@channelRecords');
+        Route::get('enter_depots','DataController@enterDepots');
+        Route::get('win_bids','DataController@winBids');
+        Route::post('channel_records','DataController@channelRecordsStore');
+        Route::post('enter_depots','DataController@enterDepotsStore');
+        Route::post('win_bids','DataController@winBidsStore');
     });
 });
 
