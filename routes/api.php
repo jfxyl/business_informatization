@@ -22,6 +22,9 @@ Route::namespace('\App\Http\Controllers\Api')->group(function(){
     Route::get('configs','ConfigController@configs');
     Route::middleware('api.refresh.token')->group(function(){
         Route::post('configs','ConfigController@store');
+        Route::post('channel_records','DataController@channel_records_store');
+        Route::post('enter_depots','DataController@enter_depots_store');
+        Route::post('win_bids','DataController@win_bids_store');
     });
 });
 

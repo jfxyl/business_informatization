@@ -16,8 +16,8 @@ class CreateChannelRecordsTable extends Migration
         Schema::create('channel_records', function (Blueprint $table) {
             $table->increments('id');
             $table->string('record_area')->comment('备案区域');
-            $table->string('record_user')->comment('备案人');
-            $table->timestamp('record_at')->comment('备案时间');
+            //$table->string('record_user')->comment('备案人');
+            $table->date('record_at')->comment('备案时间');
             $table->string('record_unit')->comment('备案单位');
             $table->string('record_aptitude')->comment('备案资质');
             $table->string('record_channel')->comment('备案渠道及数量');
@@ -28,7 +28,7 @@ class CreateChannelRecordsTable extends Migration
             $table->string('bond_submit_person')->comment('保证金递交人');
             $table->string('enter_type_result')->comment('入库类型及结果');
             $table->string('is_set_filiale')->comment('是否设立分公司');
-            $table->string('remark')->comment('备注');
+            $table->string('remark')->nullable()->comment('备注');
             $table->timestamps();
         });
     }
