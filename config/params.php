@@ -1,9 +1,5 @@
 <?php
 return [
-    //备案区域
-    'record_area' => [
-        ''
-    ],
     //备案单位
     'record_unit' => [
         '备案单位1',

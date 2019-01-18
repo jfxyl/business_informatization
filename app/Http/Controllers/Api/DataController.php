@@ -10,32 +10,59 @@ use App\Http\Requests\Api\WinBidRequest;
 use App\Models\ChannelRecord;
 use App\Models\EnterDepot;
 use App\Models\WinBid;
+use App\Models\RecordChannelUser;
+use App\Models\RecordLegalPerson;
+use App\Models\BondSubmitPerson;
+use App\Models\ProjectManager;
+use App\Models\BusinessChannel;
+use App\Models\Partner;
+use DB;
 
 class DataController extends Controller
 {
     public function channelRecordsStore(ChannelRecordRequest $request)
     {
-        if($data = ChannelRecord::create($request->all())){
+        DB::beginTransaction();
+        try{
+            RecordChannelUser::firstOrCreate(['name'=>$request->record_channel_user]);
+            RecordLegalPerson::firstOrCreate(['name'=>$request->record_legal_person]);
+            BondSubmitPerson::firstOrCreate(['name'=>$request->bond_submit_person]);
+            $data = ChannelRecord::create($request->all());
+            DB::commit();
             return formSuccess('添加成功！',$data);
-        }else{
+        }catch (\Exception $e){
+            DB::rollBack();
             return formError('添加失败！');
         }
     }
 
     public function enterDepotsStore(EnterDepotRequest $request)
     {
-        if($data = EnterDepot::create($request->all())){
+        DB::beginTransaction();
+        try{
+            RecordChannelUser::firstOrCreate(['name'=>$request->record_channel_user]);
+            BondSubmitPerson::firstOrCreate(['name'=>$request->bond_submit_person]);
+            $data = ChannelRecord::create($request->all());
+            DB::commit();
             return formSuccess('添加成功！',$data);
-        }else{
+        }catch (\Exception $e){
+            DB::rollBack();
             return formError('添加失败！');
         }
     }
 
     public function winBidsStore(WinBidRequest $request)
     {
-        if($data = WinBid::create($request->all())){
+        DB::beginTransaction();
+        try{
+            ProjectManager::create(['name'=>$request->project_managers]);
+            BusinessChannel::create(['name'=>$request->business_channels]);
+            Partner::create(['name'=>$request->partners]);
+            $data = ChannelRecord::create($request->all());
+            DB::commit();
             return formSuccess('添加成功！',$data);
-        }else{
+        }catch (\Exception $e){
+            DB::rollBack();
             return formError('添加失败！');
         }
     }
