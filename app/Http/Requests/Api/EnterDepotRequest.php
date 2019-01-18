@@ -55,11 +55,9 @@ class EnterDepotRequest extends FormRequest
     {
         return [
             'company_name' => '单位名称',
-            //'record_user' => '备案人',
             'record_at' => '备案时间',
             'record_unit' => '备案单位',
             'record_aptitude' => '备案资质',
-            //'enter_voucher' => '入库凭证',
             'url' => '登入网址',
             'record_channel_user' => '备案渠道责任人',
             'special_demand' => '特殊要求',

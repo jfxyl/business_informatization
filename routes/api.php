@@ -22,7 +22,7 @@ Route::namespace('\App\Http\Controllers\Api')->group(function(){
     Route::get('invariable_configs','ConfigController@invariableConfigs');
     Route::get('variable_configs','ConfigController@variableConfigs');
     Route::middleware('api.refresh.token')->group(function(){
-        Route::post('variable_configs','ConfigController@variableConfigsStore');
+        //Route::post('variable_configs','ConfigController@variableConfigsStore');
         Route::get('channel_records','DataController@channelRecords');
         Route::get('enter_depots','DataController@enterDepots');
         Route::get('win_bids','DataController@winBids');
