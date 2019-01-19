@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateWinBidTable extends Migration
+class CreateWinBidsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,17 @@ class CreateWinBidTable extends Migration
      */
     public function up()
     {
-        Schema::create('win_bid', function (Blueprint $table) {
+        Schema::create('win_bids', function (Blueprint $table) {
             $table->increments('id');
             $table->string('area')->comment('区域');
             $table->string('project_name')->comment('工程名称');
+            $table->string('win_bid_unit')->comment('中标单位');
             $table->string('win_bid_price')->comment('中标价');
-            $table->timestamp('contract_sign_at')->nullable()->comment('合同签订时间');
+            $table->date('contract_sign_at')->nullable()->comment('合同签订时间');
             $table->integer('work_days')->comment('工期');
-            $table->timestamp('begin_at')->nullable()->comment('开工日期');
-            $table->timestamp('end_at')->nullable()->comment('竣工日期');
-            $table->string('project_index')->comment('主要工程指标');
+            $table->date('begin_at')->nullable()->comment('开工日期');
+            $table->date('end_at')->nullable()->comment('竣工日期');
+            $table->string('project_index')->comment('主要工程内容');
             $table->string('project_type')->comment('工程类型');
             $table->string('project_manager')->comment('项目经理');
             $table->string('business_channel')->comment('经营渠道');
@@ -30,7 +31,7 @@ class CreateWinBidTable extends Migration
             $table->string('win_bid_publicity')->comment('中标公告');
             $table->string('is_end')->comment('是否竣工');
             $table->string('is_up_to_par')->comment('是否达标');
-            $table->string('remark')->comment('备注');
+            $table->string('remark')->nullable()->comment('备注');
             $table->timestamps();
         });
     }
