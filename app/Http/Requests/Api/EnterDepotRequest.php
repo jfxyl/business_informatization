@@ -45,7 +45,7 @@ class EnterDepotRequest extends FormRequest
                 return $rules;
                 break;
             case 'PUT':
-                $rules['id'] = ['bail','required','exists:channel_records'];
+                $rules['id'] = ['bail','required','exists:enter_depots'];
                 return $rules;
                 break;
         }

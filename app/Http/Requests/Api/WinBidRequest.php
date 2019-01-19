@@ -50,7 +50,7 @@ class WinBidRequest extends FormRequest
                 return $rules;
                 break;
             case 'PUT':
-                $rules['id'] = ['bail','required','exists:channel_records'];
+                $rules['id'] = ['bail','required','exists:win_bids'];
                 return $rules;
                 break;
         }
