@@ -32,6 +32,9 @@ Route::namespace('\App\Http\Controllers\Api')->group(function(){
         Route::put('channel_records','DataController@channelRecordsUpdate');
         Route::put('enter_depots','DataController@enterDepotsUpdate');
         Route::put('win_bids','DataController@winBidsUpdate');
+        Route::delete('channel_records','DataController@channelRecordsDestroy');
+        Route::delete('enter_depots','DataController@enterDepotsDestroy');
+        Route::delete('win_bids','DataController@winBidsDestroy');
     });
 });
 

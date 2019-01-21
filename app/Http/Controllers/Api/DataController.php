@@ -42,7 +42,7 @@ class DataController extends Controller
         try{
             RecordChannelUser::firstOrCreate(['name'=>$request->record_channel_user]);
             BondSubmitPerson::firstOrCreate(['name'=>$request->bond_submit_person]);
-            $data = ChannelRecord::create($request->all());
+            $data = EnterDepot::create($request->all());
             DB::commit();
             return formSuccess('添加成功！',$data);
         }catch (\Exception $e){
@@ -55,10 +55,10 @@ class DataController extends Controller
     {
         DB::beginTransaction();
         try{
-            ProjectManager::create(['name'=>$request->project_managers]);
-            BusinessChannel::create(['name'=>$request->business_channels]);
-            Partner::create(['name'=>$request->partners]);
-            $data = ChannelRecord::create($request->all());
+            ProjectManager::firstOrCreate(['name'=>$request->project_managers]);
+            BusinessChannel::firstOrCreate(['name'=>$request->business_channels]);
+            Partner::firstOrCreate(['name'=>$request->partners]);
+            $data = WinBid::create($request->all());
             DB::commit();
             return formSuccess('添加成功！',$data);
         }catch (\Exception $e){
@@ -69,27 +69,50 @@ class DataController extends Controller
 
     public function channelRecordsUpdate(ChannelRecordRequest $request)
     {
-        if($data = ChannelRecord::where('id',$request->id)->update($request->except('id'))){
-            return formSuccess('修改成功！');
-        }else{
+        DB::beginTransaction();
+        try{
+            RecordChannelUser::firstOrCreate(['name'=>$request->record_channel_user]);
+            RecordLegalPerson::firstOrCreate(['name'=>$request->record_legal_person]);
+            BondSubmitPerson::firstOrCreate(['name'=>$request->bond_submit_person]);
+            $data = ChannelRecord::find($request->id);
+            $data->update($request->except('id'));
+            DB::commit();
+            return formSuccess('修改成功！',$data);
+        }catch (\Exception $e){
+            DB::rollBack();
             return formError('修改失败！');
         }
     }
 
     public function enterDepotsUpdate(EnterDepotRequest $request)
     {
-        if($data = EnterDepot::where('id',$request->id)->update($request->except('id'))){
-            return formSuccess('修改成功！');
-        }else{
+        DB::beginTransaction();
+        try{
+            RecordChannelUser::firstOrCreate(['name'=>$request->record_channel_user]);
+            BondSubmitPerson::firstOrCreate(['name'=>$request->bond_submit_person]);
+            $data = EnterDepot::find($request->id);
+            $data->update($request->except('id'));
+            DB::commit();
+            return formSuccess('修改成功！',$data);
+        }catch (\Exception $e){
+            DB::rollBack();
             return formError('修改失败！');
         }
     }
 
     public function winBidsUpdate(WinBidRequest $request)
     {
-        if($data = WinBid::where('id',$request->id)->update($request->except('id'))){
-            return formSuccess('修改成功！');
-        }else{
+        DB::beginTransaction();
+        try{
+            ProjectManager::firstOrCreate(['name'=>$request->project_managers]);
+            BusinessChannel::firstOrCreate(['name'=>$request->business_channels]);
+            Partner::firstOrCreate(['name'=>$request->partners]);
+            $data = WinBid::find($request);
+            $data->update($request->except('id'));
+            DB::commit();
+            return formSuccess('修改成功！',$data);
+        }catch (\Exception $e){
+            DB::rollBack();
             return formError('修改失败！');
         }
     }
@@ -107,5 +130,44 @@ class DataController extends Controller
     public function winBids()
     {
         return WinBid::paginate(10);
+    }
+
+    public function channelRecordsDestroy(Request $request)
+    {
+        if($data = ChannelRecord::find($request->id)){
+            if($data->delete()){
+                return formSuccess('删除成功！');
+            }else{
+                return formError('删除失败！');
+            }
+        }else{
+            return formError('记录不存在！');
+        }
+    }
+
+    public function enterDepotsDestroy(Request $request)
+    {
+        if($data = EnterDepot::find($request->id)){
+            if($data->delete()){
+                return formSuccess('删除成功！');
+            }else{
+                return formError('删除失败！');
+            }
+        }else{
+            return formError('记录不存在！');
+        }
+    }
+
+    public function winBidsDestroy(Request $request)
+    {
+        if($data = WinBid::find($request->id)){
+            if($data->delete()){
+                return formSuccess('删除成功！');
+            }else{
+                return formError('删除失败！');
+            }
+        }else{
+            return formError('记录不存在！');
+        }
     }
 }
