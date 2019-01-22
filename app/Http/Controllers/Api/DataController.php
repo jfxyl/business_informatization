@@ -55,9 +55,9 @@ class DataController extends Controller
     {
         DB::beginTransaction();
         try{
-            ProjectManager::firstOrCreate(['name'=>$request->project_managers]);
-            BusinessChannel::firstOrCreate(['name'=>$request->business_channels]);
-            Partner::firstOrCreate(['name'=>$request->partners]);
+            ProjectManager::firstOrCreate(['name'=>$request->project_manager]);
+            BusinessChannel::firstOrCreate(['name'=>$request->business_channel]);
+            Partner::firstOrCreate(['name'=>$request->partner]);
             $data = WinBid::create($request->all());
             DB::commit();
             return formSuccess('添加成功！',$data);
