@@ -107,7 +107,7 @@ class DataController extends Controller
             ProjectManager::firstOrCreate(['name'=>$request->project_manager]);
             BusinessChannel::firstOrCreate(['name'=>$request->business_channel]);
             Partner::firstOrCreate(['name'=>$request->partner]);
-            $data = WinBid::find($request);
+            $data = WinBid::find($request->id);
             $data->update($request->except('id'));
             DB::commit();
             return formSuccess('修改成功！',$data);
