@@ -119,17 +119,17 @@ class DataController extends Controller
 
     public function channelRecords()
     {
-        return ChannelRecord::paginate(10);
+        return ChannelRecord::orderBy('id','desc')->paginate(10);
     }
 
     public function enterDepots()
     {
-        return EnterDepot::paginate(10);
+        return EnterDepot::orderBy('id','desc')->paginate(10);
     }
 
     public function winBids()
     {
-        return WinBid::paginate(10);
+        return WinBid::orderBy('id','desc')->paginate(10);
     }
 
     public function channelRecordsDestroy(Request $request)
