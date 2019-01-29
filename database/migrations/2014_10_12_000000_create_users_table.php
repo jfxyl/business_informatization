@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('name')->unique();
             $table->string('password');
-            $table->boolean('status')->default(true);
+            $table->boolean('status')->default(true)->comment('1为正常，2为禁用');
             $table->timestamps();
         });
     }
