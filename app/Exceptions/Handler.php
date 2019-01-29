@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Auth\Access\AuthorizationException;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class Handler extends ExceptionHandler
@@ -49,17 +50,21 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        // 参数验证错误的异常，我们需要返回 400 的 http code 和一句错误信息
+        // 参数验证错误的异常
         if ($exception instanceof ValidationException) {
             return response(['status' => 2,'msg' => array_first(array_collapse($exception->errors()))]);
         }
         // 用户认证的异常，我们需要返回 401 的 http code 和错误信息
         if ($exception instanceof UnauthorizedHttpException) {
-            return response(['status' => 1,'msg' => $exception->getMessage()]);
+            return response(['status' => 1,'msg' => '请先登录']);
         }
         // 用户权限的异常
         if ($exception instanceof AuthenticationException) {
-            return response(['status' => 1,'msg' => $exception->getMessage()]);
+            return response(['status' => 4,'msg' => $exception->getMessage()]);
+        }
+        // 用户权限的异常（修改或删除不属于自己的条目）
+        if ($exception instanceof AuthorizationException) {
+            return response(['status' => 3,'msg' => '此操作未经授权']);
         }
         return parent::render($request, $exception);
     }

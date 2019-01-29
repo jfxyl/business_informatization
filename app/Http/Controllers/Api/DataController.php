@@ -75,12 +75,13 @@ class DataController extends Controller
 
     public function channelRecordsUpdate(ChannelRecordRequest $request)
     {
+        $data = ChannelRecord::find($request->id);
+        $this->authorize('own', $data);
         DB::beginTransaction();
         try{
             RecordChannelUser::firstOrCreate(['name'=>$request->record_channel_user]);
             RecordLegalPerson::firstOrCreate(['name'=>$request->record_legal_person]);
             BondSubmitPerson::firstOrCreate(['name'=>$request->bond_submit_person]);
-            $data = ChannelRecord::find($request->id);
             $data->update($request->except('id'));
             DB::commit();
             return formSuccess('修改成功！',$data);
@@ -92,11 +93,12 @@ class DataController extends Controller
 
     public function enterDepotsUpdate(EnterDepotRequest $request)
     {
+        $data = EnterDepot::find($request->id);
+        $this->authorize('own', $data);
         DB::beginTransaction();
         try{
             RecordChannelUser::firstOrCreate(['name'=>$request->record_channel_user]);
             BondSubmitPerson::firstOrCreate(['name'=>$request->bond_submit_person]);
-            $data = EnterDepot::find($request->id);
             $data->update($request->except('id'));
             DB::commit();
             return formSuccess('修改成功！',$data);
@@ -108,12 +110,13 @@ class DataController extends Controller
 
     public function winBidsUpdate(WinBidRequest $request)
     {
+        $data = WinBid::find($request->id);
+        $this->authorize('own', $data);
         DB::beginTransaction();
         try{
             ProjectManager::firstOrCreate(['name'=>$request->project_manager]);
             BusinessChannel::firstOrCreate(['name'=>$request->business_channel]);
             Partner::firstOrCreate(['name'=>$request->partner]);
-            $data = WinBid::find($request->id);
             $data->update($request->except('id'));
             DB::commit();
             return formSuccess('修改成功！',$data);
@@ -141,6 +144,7 @@ class DataController extends Controller
     public function channelRecordsDestroy(Request $request)
     {
         if($data = ChannelRecord::find($request->id)){
+            $this->authorize('own', $data);
             if($data->update(['is_del' => 1,'del_user_id' => $request->user()->id])){
                 return formSuccess('删除成功！');
             }else{
@@ -154,6 +158,7 @@ class DataController extends Controller
     public function enterDepotsDestroy(Request $request)
     {
         if($data = EnterDepot::find($request->id)){
+            $this->authorize('own', $data);
             if($data->update(['is_del' => 1,'del_user_id' => $request->user()->id])){
                 return formSuccess('删除成功！');
             }else{
@@ -167,6 +172,7 @@ class DataController extends Controller
     public function winBidsDestroy(Request $request)
     {
         if($data = WinBid::find($request->id)){
+            $this->authorize('own', $data);
             if($data->update(['is_del' => 1,'del_user_id' => $request->user()->id])){
                 return formSuccess('删除成功！');
             }else{
