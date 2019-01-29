@@ -60,11 +60,11 @@ class Handler extends ExceptionHandler
         }
         // 用户权限的异常
         if ($exception instanceof AuthenticationException) {
-            return response(['status' => 4,'msg' => $exception->getMessage()]);
+            return response(['status' => 1,'msg' => $exception->getMessage()]);
         }
         // 用户权限的异常（修改或删除不属于自己的条目）
         if ($exception instanceof AuthorizationException) {
-            return response(['status' => 3,'msg' => '此操作未经授权']);
+            return response(['status' => 1,'msg' => '此操作未经授权']);
         }
         return parent::render($request, $exception);
     }
