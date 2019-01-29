@@ -27,7 +27,9 @@ class DataController extends Controller
             RecordChannelUser::firstOrCreate(['name'=>$request->record_channel_user]);
             RecordLegalPerson::firstOrCreate(['name'=>$request->record_legal_person]);
             BondSubmitPerson::firstOrCreate(['name'=>$request->bond_submit_person]);
-            $data = ChannelRecord::create($request->all());
+            $data = new ChannelRecord($request->all());
+            $data->user()->associate($request->user());
+            $data->save();
             DB::commit();
             return formSuccess('添加成功！',$data);
         }catch (\Exception $e){
@@ -42,7 +44,9 @@ class DataController extends Controller
         try{
             RecordChannelUser::firstOrCreate(['name'=>$request->record_channel_user]);
             BondSubmitPerson::firstOrCreate(['name'=>$request->bond_submit_person]);
-            $data = EnterDepot::create($request->all());
+            $data = new EnterDepot($request->all());
+            $data->user()->associate($request->user());
+            $data->save();
             DB::commit();
             return formSuccess('添加成功！',$data);
         }catch (\Exception $e){
@@ -58,7 +62,9 @@ class DataController extends Controller
             ProjectManager::firstOrCreate(['name'=>$request->project_manager]);
             BusinessChannel::firstOrCreate(['name'=>$request->business_channel]);
             Partner::firstOrCreate(['name'=>$request->partner]);
-            $data = WinBid::create($request->all());
+            $data = new WinBid($request->all());
+            $data->user()->associate($request->user());
+            $data->save();
             DB::commit();
             return formSuccess('添加成功！',$data);
         }catch (\Exception $e){
@@ -119,23 +125,23 @@ class DataController extends Controller
 
     public function channelRecords()
     {
-        return ChannelRecord::orderBy('id','desc')->paginate(10);
+        return ChannelRecord::orderBy('id','desc')->where('is_del',0)->paginate(10);
     }
 
     public function enterDepots()
     {
-        return EnterDepot::orderBy('id','desc')->paginate(10);
+        return EnterDepot::orderBy('id','desc')->where('is_del',0)->paginate(10);
     }
 
     public function winBids()
     {
-        return WinBid::orderBy('id','desc')->paginate(10);
+        return WinBid::orderBy('id','desc')->where('is_del',0)->paginate(10);
     }
 
     public function channelRecordsDestroy(Request $request)
     {
         if($data = ChannelRecord::find($request->id)){
-            if($data->delete()){
+            if($data->update(['is_del' => 1,'del_user_id' => $request->user()->id])){
                 return formSuccess('删除成功！');
             }else{
                 return formError('删除失败！');
@@ -148,7 +154,7 @@ class DataController extends Controller
     public function enterDepotsDestroy(Request $request)
     {
         if($data = EnterDepot::find($request->id)){
-            if($data->delete()){
+            if($data->update(['is_del' => 1,'del_user_id' => $request->user()->id])){
                 return formSuccess('删除成功！');
             }else{
                 return formError('删除失败！');
@@ -161,7 +167,7 @@ class DataController extends Controller
     public function winBidsDestroy(Request $request)
     {
         if($data = WinBid::find($request->id)){
-            if($data->delete()){
+            if($data->update(['is_del' => 1,'del_user_id' => $request->user()->id])){
                 return formSuccess('删除成功！');
             }else{
                 return formError('删除失败！');
