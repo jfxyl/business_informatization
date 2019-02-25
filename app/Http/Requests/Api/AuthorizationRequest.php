@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class AuthorizationRequest extends FormRequest
 {
@@ -24,7 +25,9 @@ class AuthorizationRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'bail|required|exists:users',
+            'name' => ['bail','required',Rule::exists('users')->where(function ($query) {
+                $query->where('status', 1);
+            })],
             'password' => 'bail|required',
         ];
     }
@@ -41,7 +44,7 @@ class AuthorizationRequest extends FormRequest
     {
         return [
             'required' => ':attribute 不能为空！',
-            'exists' => ':attribute 不存在！'
+            'exists' => ':attribute 不存在或已禁用！'
         ];
     }
 }

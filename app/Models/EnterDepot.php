@@ -18,6 +18,13 @@ class EnterDepot extends Model
         'bond_submit_person',
         'enter_type_result',
         'is_annual_review',
-        'remark'
+        'remark',
+        'is_del',
+        'del_user_id'
     ];
+
+    public function  user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

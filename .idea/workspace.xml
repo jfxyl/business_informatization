@@ -193,9 +193,14 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/routes/api.php">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+            <state relative-caret-position="494">
+              <caret line="26" column="30" selection-start-line="26" selection-start-column="30" selection-end-line="26" selection-end-column="30" />
+=======
             <state relative-caret-position="456">
               <caret line="24" column="10" selection-start-line="24" selection-start-column="10" selection-end-line="24" selection-end-column="10" />
 >>>>>>> c1c515c62e5b5f7044869424fd25c3bc22de0269
+>>>>>>> 1c6b451f01015c144aa588120e8317afb3da356e
             </state>
           </provider>
         </entry>
@@ -495,12 +500,12 @@
       <updated>1547555314677</updated>
       <workItem from="1547555316109" duration="6898000" />
       <workItem from="1547604654957" duration="25070000" />
-      <workItem from="1547696475549" duration="18988000" />
+      <workItem from="1547696475549" duration="19106000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="50956000" />
+    <option name="totallyTimeSpent" value="51074000" />
   </component>
   <component name="ToolWindowManager">
 <<<<<<< HEAD
@@ -894,8 +899,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/api.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="456">
-          <caret line="24" column="10" selection-start-line="24" selection-start-column="10" selection-end-line="24" selection-end-column="10" />
+        <state relative-caret-position="494">
+          <caret line="26" column="30" selection-start-line="26" selection-start-column="30" selection-end-line="26" selection-end-column="30" />
         </state>
       </provider>
     </entry>
