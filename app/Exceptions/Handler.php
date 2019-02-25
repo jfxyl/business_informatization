@@ -50,21 +50,21 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        // 用户认证的异常
+        if ($exception instanceof UnauthorizedHttpException) {
+            return response(['status' => 1,'msg' => '请先登录']);
+        }
+        // 用户认证的异常
+        if ($exception instanceof AuthenticationException) {
+            return response(['status' => 1,'msg' => $exception->getMessage()]);
+        }
         // 参数验证错误的异常
         if ($exception instanceof ValidationException) {
             return response(['status' => 2,'msg' => array_first(array_collapse($exception->errors()))]);
         }
-        // 用户认证的异常，我们需要返回 401 的 http code 和错误信息
-        if ($exception instanceof UnauthorizedHttpException) {
-            return response(['status' => 1,'msg' => '请先登录']);
-        }
-        // 用户权限的异常
-        if ($exception instanceof AuthenticationException) {
-            return response(['status' => 1,'msg' => $exception->getMessage()]);
-        }
         // 用户权限的异常（修改或删除不属于自己的条目）
         if ($exception instanceof AuthorizationException) {
-            return response(['status' => 1,'msg' => '此操作未经授权']);
+            return response(['status' => 4,'msg' => '此操作未经授权']);
         }
         return parent::render($request, $exception);
     }
