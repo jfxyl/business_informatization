@@ -16,6 +16,7 @@ class AuthorizationsController extends Controller
         if (!$token = Auth::attempt(['name' => $name, 'password' => $password])) {
             return formError('密码错误！');
         }
-        return response()->json(formSuccess('登陆成功！'))->header('Authorization','Bearer '.Auth::fromUser(Auth::user()));
+        $data = ['user_id' => Auth::user()->id,'name' => $name];
+        return response()->json(formSuccess('登陆成功！',$data))->header('Authorization','Bearer '.Auth::fromUser(Auth::user()));
     }
 }
