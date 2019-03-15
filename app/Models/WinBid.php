@@ -32,4 +32,17 @@ class WinBid extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function setProjectTypeAttribute($value)
+    {
+        if(is_array($value)){
+            $value =  implode(',',array_unique($value));
+        }
+        $this->attributes['project_type'] = $value;
+    }
+
+    public function getProjectTypeAttribute($value)
+    {
+        return explode(',',$value);
+    }
 }

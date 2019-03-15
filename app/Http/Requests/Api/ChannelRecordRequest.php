@@ -31,8 +31,9 @@ class ChannelRecordRequest extends FormRequest
             'record_area' => 'bail|required',
             'record_at' => 'bail|required|date_format:Y-m-d',
             'record_unit' => ['bail','required',Rule::in($this->params['record_unit'])],
-            'record_aptitude' => ['bail','required',Rule::in($this->params['record_aptitude'])],
-            'record_channel' => ['bail','required'],
+            'record_aptitude' => ['bail','required','array'],
+            'record_aptitude.*' => ['bail','required',Rule::in($this->params['record_aptitude'])],
+            //'record_channel' => ['bail','required'],
             'url' => ['bail','required','url'],
             'record_channel_user' => ['bail','required'],
             'record_legal_person' => ['bail','required'],
@@ -40,7 +41,7 @@ class ChannelRecordRequest extends FormRequest
             'bond_submit_person' => ['bail','required'],
             'enter_type_result' => ['bail','required',Rule::in($this->params['enter_type_result'])],
             'is_set_filiale' => ['bail','required',Rule::in($this->params['is_set_filiale'])],
-            'remark' => ''
+
         ];
         switch($this->method()) {
             case 'POST':
@@ -82,6 +83,8 @@ class ChannelRecordRequest extends FormRequest
             'in' => ':attribute 不存在！',
             'url' => ':attribute 不是标准的url链接！',
             'exists' => ':attribute 不存在！',
+            'array' => '备案资质 格式错误！',
+            'record_aptitude.*.in' => '备案资质 不存在！'
         ];
     }
 }

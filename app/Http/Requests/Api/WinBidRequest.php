@@ -33,17 +33,18 @@ class WinBidRequest extends FormRequest
             'win_bid_price' => ['bail','required'],
             'contract_sign_at' => ['bail','required','date_format:Y-m-d'],
             'work_days' => ['bail','required','integer'],
-            'begin_at' => ['bail','required','date_format:Y-m-d'],
-            'end_at' => ['bail','required','date_format:Y-m-d'],
+            'begin_at' => ['bail','date_format:Y-m-d'],
+            'end_at' => ['bail','date_format:Y-m-d'],
             'project_index' => ['bail','required'],
-            'project_type' => ['bail','required',Rule::in($this->params['project_type'])],
+            'project_type' => ['bail','required','array'],
+            'project_type.*' => ['bail','required',Rule::in($this->params['project_type'])],
             'project_manager' => ['bail','required'],
             'business_channel' => ['bail','required'],
             'partner' => ['bail','required'],
-            'win_bid_publicity' => ['bail','required','url'],
+            'win_bid_publicity' => ['bail','url'],
             'is_end' => ['bail','required',Rule::in($this->params['is_end'])],
             'is_up_to_par' => ['bail','required',Rule::in($this->params['is_up_to_par'])],
-            'remark' => ''
+            'achievement_unit' => ['bail','required',Rule::in($this->params['achievement_unit'])]
         ];
         switch($this->method()) {
             case 'POST':
@@ -75,7 +76,9 @@ class WinBidRequest extends FormRequest
             'win_bid_publicity' => '中标公告',
             'is_end' => '是否竣工',
             'is_up_to_par' => '是否达标',
-            'remark' => '备注'
+            'achievement_unit' => '业绩所在单位',
+            'remark' => '备注',
+            'contract_date_remark' => '合同日期备注',
         ];
     }
 
@@ -88,6 +91,8 @@ class WinBidRequest extends FormRequest
             'in' => ':attribute 不存在！',
             'url' => ':attribute 不是标准的url链接！',
             'exists' => ':attribute 不存在！',
+            'array' => '工程类型 格式错误！',
+            'project_type.*.in' => '工程类型 不存在！'
         ];
     }
 }
