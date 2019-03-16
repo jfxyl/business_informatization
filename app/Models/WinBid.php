@@ -23,7 +23,9 @@ class WinBid extends Model
         'win_bid_publicity',
         'is_end',
         'is_up_to_par',
+        'achievement_unit',
         'remark',
+        'contract_date_remark',
         'is_del',
         'del_user_id'
     ];
