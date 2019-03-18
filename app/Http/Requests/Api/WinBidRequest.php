@@ -29,7 +29,12 @@ class WinBidRequest extends FormRequest
         $rules =  [
             'area' => ['bail','required'],
             'project_name' => ['bail','required'],
-            'win_bid_unit' => ['bail','required',Rule::in($this->params['win_bid_unit'])],
+            //'win_bid_unit' => ['bail','required',Rule::in($this->params['win_bid_unit'])],
+            'win_bid_unit' => ['bail','required',function($attribute,$value,$fail){
+                if(!in_array($value,$this->params['win_bid_unit'])){
+                    $fail('中标单位 不存在！');
+                }
+            }],
             'win_bid_price' => ['bail','required'],
             'contract_sign_at' => ['bail','required','date_format:Y-m-d'],
             'work_days' => ['bail','required','integer'],
@@ -37,14 +42,34 @@ class WinBidRequest extends FormRequest
             'end_at' => ['bail','nullable','date_format:Y-m-d'],
             'project_index' => ['bail','required'],
             'project_type' => ['bail','required','array'],
-            'project_type.*' => ['bail','required',Rule::in($this->params['project_type'])],
+            //'project_type.*' => ['bail','required',Rule::in($this->params['project_type'])],
+            'project_type.*' => ['bail','required',function($attribute,$value,$fail){
+                if(!in_array($value,$this->params['project_type'])){
+                    $fail('工程类型 不存在！');
+                }
+            }],
             'project_manager' => ['bail','required'],
             'business_channel' => ['bail','required'],
             'partner' => ['bail','required'],
             'win_bid_publicity' => ['bail','nullable','url'],
-            'is_end' => ['bail','required',Rule::in($this->params['is_end'])],
-            'is_up_to_par' => ['bail','required',Rule::in($this->params['is_up_to_par'])],
-            'achievement_unit' => ['bail','required',Rule::in($this->params['achievement_unit'])]
+            //'is_end' => ['bail','required',Rule::in($this->params['is_end'])],
+            'is_end' => ['bail','required',function($attribute,$value,$fail){
+                if(!in_array($value,$this->params['is_end'])){
+                    $fail('是否竣工 不存在！');
+                }
+            }],
+            //'is_up_to_par' => ['bail','required',Rule::in($this->params['is_up_to_par'])],
+            'is_up_to_par' => ['bail','required',function($attribute,$value,$fail){
+                if(!in_array($value,$this->params['is_up_to_par'])){
+                    $fail('是否达标 不存在！');
+                }
+            }],
+            //'achievement_unit' => ['bail','required',Rule::in($this->params['achievement_unit'])]
+            'achievement_unit' => ['bail','required',function($attribute,$value,$fail){
+                if(!in_array($value,$this->params['achievement_unit'])){
+                    $fail('业绩所在单位 不存在！');
+                }
+            }]
         ];
         switch($this->method()) {
             case 'POST':

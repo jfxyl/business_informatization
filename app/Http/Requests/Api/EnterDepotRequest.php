@@ -29,15 +29,36 @@ class EnterDepotRequest extends FormRequest
         $rules =  [
             'company_name' => ['bail','required'],
             'record_at' => ['bail','required','date_format:Y-m-d'],
-            'record_unit' => ['bail','required',Rule::in($this->params['record_unit'])],
-            'record_aptitude' => ['bail','required',Rule::in($this->params['record_aptitude'])],
+            //'record_unit' => ['bail','required',Rule::in($this->params['record_unit'])],
+            'record_unit' => ['bail','required',function($attribute,$value,$fail){
+                if(!in_array($value,$this->params['record_unit'])){
+                    $fail('备案单位 不存在！');
+                }
+            }],
+            'record_aptitude' => ['bail','required','array'],
+            //'record_aptitude.*' => ['bail','required',Rule::in($this->params['record_aptitude'])],
+            'record_aptitude.*' => ['bail','required',function($attribute,$value,$fail){
+                if(!in_array($value,$this->params['record_aptitude'])){
+                    $fail('备案资质 不存在！');
+                }
+            }],
             'url' => ['bail','required','url'],
             'record_channel_user' => ['bail','required'],
             'special_demand' => ['bail'],
             'bond_type_money' => ['bail','required'],
             'bond_submit_person' => ['bail','required'],
-            'enter_type_result' => ['bail','required',Rule::in($this->params['enter_type_result'])],
-            'is_annual_review' => ['bail','required',Rule::in($this->params['is_annual_review'])],
+            //'enter_type_result' => ['bail','required',Rule::in($this->params['enter_type_result'])],
+            'enter_type_result' => ['bail','required',function($attribute,$value,$fail){
+                if(!in_array($value,$this->params['enter_type_result'])){
+                    $fail('入库类型及结果 不存在！');
+                }
+            }],
+            //'is_annual_review' => ['bail','required',Rule::in($this->params['is_annual_review'])],
+            'is_annual_review' => ['bail','required',function($attribute,$value,$fail){
+                if(!in_array($value,$this->params['is_annual_review'])){
+                    $fail('是否需要年审 不存在！');
+                }
+            }],
             'remark' => ''
         ];
         switch($this->method()) {
@@ -77,6 +98,8 @@ class EnterDepotRequest extends FormRequest
             'in' => ':attribute 不存在！',
             'url' => ':attribute 不是标准的url链接！',
             'exists' => ':attribute 不存在！',
+            'array' => '备案资质 格式错误！',
+            'record_aptitude.*.in' => '备案资质 不存在！'
         ];
     }
 }

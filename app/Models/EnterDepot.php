@@ -27,4 +27,17 @@ class EnterDepot extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function setRecordAptitudeAttribute($value)
+    {
+        if(is_array($value)){
+            $value =  implode(',',array_unique($value));
+        }
+        $this->attributes['record_aptitude'] = $value;
+    }
+
+    public function getRecordAptitudeAttribute($value)
+    {
+        return explode(',',$value);
+    }
 }
