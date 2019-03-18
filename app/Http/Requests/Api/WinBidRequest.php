@@ -49,7 +49,7 @@ class WinBidRequest extends FormRequest
                 }
             }],
             'project_manager' => ['bail','required'],
-            'business_channel' => ['bail','required'],
+            //'business_channel' => ['bail','required'],
             'partner' => ['bail','required'],
             'win_bid_publicity' => ['bail','nullable','url'],
             //'is_end' => ['bail','required',Rule::in($this->params['is_end'])],

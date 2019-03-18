@@ -24,9 +24,9 @@ class DataController extends Controller
     {
         DB::beginTransaction();
         try{
-            RecordChannelUser::firstOrCreate(['name'=>$request->record_channel_user]);
-            RecordLegalPerson::firstOrCreate(['name'=>$request->record_legal_person]);
-            BondSubmitPerson::firstOrCreate(['name'=>$request->bond_submit_person]);
+            $request->record_channel_user and RecordChannelUser::firstOrCreate(['name'=>$request->record_channel_user]);
+            $request->record_legal_person and RecordLegalPerson::firstOrCreate(['name'=>$request->record_legal_person]);
+            $request->bond_submit_person and BondSubmitPerson::firstOrCreate(['name'=>$request->bond_submit_person]);
             $data = new ChannelRecord($request->all());
             $data->user()->associate($request->user());
             $data->save();
@@ -42,8 +42,8 @@ class DataController extends Controller
     {
         DB::beginTransaction();
         try{
-            RecordChannelUser::firstOrCreate(['name'=>$request->record_channel_user]);
-            BondSubmitPerson::firstOrCreate(['name'=>$request->bond_submit_person]);
+            $request->record_channel_user and RecordChannelUser::firstOrCreate(['name'=>$request->record_channel_user]);
+            $request->bond_submit_person and BondSubmitPerson::firstOrCreate(['name'=>$request->bond_submit_person]);
             $data = new EnterDepot($request->all());
             $data->user()->associate($request->user());
             $data->save();
@@ -59,9 +59,9 @@ class DataController extends Controller
     {
         DB::beginTransaction();
         try{
-            ProjectManager::firstOrCreate(['name'=>$request->project_manager]);
-            BusinessChannel::firstOrCreate(['name'=>$request->business_channel]);
-            Partner::firstOrCreate(['name'=>$request->partner]);
+            $request->project_manager and ProjectManager::firstOrCreate(['name'=>$request->project_manager]);
+            $request->business_channel and BusinessChannel::firstOrCreate(['name'=>$request->business_channel]);
+            $request->partner and Partner::firstOrCreate(['name'=>$request->partner]);
             $data = new WinBid($request->all());
             $data->user()->associate($request->user());
             $data->save();
@@ -79,9 +79,9 @@ class DataController extends Controller
         $this->authorize('own', $data);
         DB::beginTransaction();
         try{
-            RecordChannelUser::firstOrCreate(['name'=>$request->record_channel_user]);
-            RecordLegalPerson::firstOrCreate(['name'=>$request->record_legal_person]);
-            BondSubmitPerson::firstOrCreate(['name'=>$request->bond_submit_person]);
+            $request->record_channel_user and RecordChannelUser::firstOrCreate(['name'=>$request->record_channel_user]);
+            $request->record_legal_person and RecordLegalPerson::firstOrCreate(['name'=>$request->record_legal_person]);
+            $request->bond_submit_person and BondSubmitPerson::firstOrCreate(['name'=>$request->bond_submit_person]);
             $data->update($request->except('id'));
             DB::commit();
             return formSuccess('修改成功！',$data);
@@ -97,8 +97,8 @@ class DataController extends Controller
         $this->authorize('own', $data);
         DB::beginTransaction();
         try{
-            RecordChannelUser::firstOrCreate(['name'=>$request->record_channel_user]);
-            BondSubmitPerson::firstOrCreate(['name'=>$request->bond_submit_person]);
+            $request->record_channel_user and RecordChannelUser::firstOrCreate(['name'=>$request->record_channel_user]);
+            $request->bond_submit_person and BondSubmitPerson::firstOrCreate(['name'=>$request->bond_submit_person]);
             $data->update($request->except('id'));
             DB::commit();
             return formSuccess('修改成功！',$data);
@@ -114,9 +114,9 @@ class DataController extends Controller
         $this->authorize('own', $data);
         DB::beginTransaction();
         try{
-            ProjectManager::firstOrCreate(['name'=>$request->project_manager]);
-            BusinessChannel::firstOrCreate(['name'=>$request->business_channel]);
-            Partner::firstOrCreate(['name'=>$request->partner]);
+            $request->project_manager and ProjectManager::firstOrCreate(['name'=>$request->project_manager]);
+            $request->business_channel and BusinessChannel::firstOrCreate(['name'=>$request->business_channel]);
+            $request->partner and Partner::firstOrCreate(['name'=>$request->partner]);
             $data->update($request->except('id'));
             DB::commit();
             return formSuccess('修改成功！',$data);
