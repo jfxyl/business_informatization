@@ -43,7 +43,7 @@ class ChannelRecordRequest extends FormRequest
                     $fail('备案资质 不存在！');
                 }
             }],
-            'url' => ['bail','required','url'],
+            'url' => ['bail','nullable','url'],
             'record_channel_user' => ['bail','required'],
             'record_legal_person' => ['bail','required'],
             'bond_type_money' => ['bail','required'],

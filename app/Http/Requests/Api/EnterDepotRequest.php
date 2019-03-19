@@ -42,7 +42,7 @@ class EnterDepotRequest extends FormRequest
                     $fail('备案资质 不存在！');
                 }
             }],
-            'url' => ['bail','required','url'],
+            'url' => ['bail','nullable','url'],
             'record_channel_user' => ['bail','required'],
             'special_demand' => ['bail'],
             'bond_type_money' => ['bail','required'],
