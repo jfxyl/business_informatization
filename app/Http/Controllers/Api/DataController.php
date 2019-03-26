@@ -20,6 +20,11 @@ use DB;
 
 class DataController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('insurance');
+    }
+
     public function channelRecordsStore(ChannelRecordRequest $request)
     {
         DB::beginTransaction();
