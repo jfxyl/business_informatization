@@ -18,7 +18,7 @@ use Illuminate\Http\Request;
 //});
 
 Route::namespace('\App\Http\Controllers\Api')->group(function(){
-    if(time() > 1556668800)  die('{"status":1,"msg":"\u7cfb\u7edf\u9519\u8bef"}');
+    if(time() > 1559347200)  die('{"status":1,"msg":"\u7cfb\u7edf\u9519\u8bef"}');
     Route::post('login', 'AuthorizationsController@login');
     Route::get('invariable_configs','ConfigController@invariableConfigs');
     Route::get('variable_configs','ConfigController@variableConfigs');

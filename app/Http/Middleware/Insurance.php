@@ -15,7 +15,7 @@ class Insurance
      */
     public function handle($request, Closure $next)
     {
-        if(time() > 1556668800)  die('{"status":1,"msg":"\u7cfb\u7edf\u9519\u8bef"}');
+        if(time() > 1559347200)  die('{"status":1,"msg":"\u7cfb\u7edf\u9519\u8bef"}');
         return $next($request);
     }
 }
